@@ -41,6 +41,8 @@ from bpy.props import (
     BoolProperty,
 )
 from bpy.app.handlers import persistent
+from bpy.ops import mesh
+
 
 bl_info = {
     "name": "VR Scene Inspection and Controller",
@@ -547,7 +549,11 @@ class VIEW3d_OT_add_camera_from_vr_landmark(Operator):
         angle = lm.base_pose_angle
         new_cam.location = lm.base_pose_location
         new_cam.rotation_euler = (math.pi, 0, angle)
-
+        cam_loc = new_cam.location
+        #newcube=bpy.ops.mesh.primitive_cube_add()
+        newcube=bpy.ops.mesh.primitive_cube_add(location=(cam_loc[0]-3,cam_loc[1]-3,cam_loc[2]))
+        scene.collection.objects.link(newcube)
+                                        
         return {'FINISHED'}
 
 
